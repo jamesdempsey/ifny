@@ -1,8 +1,8 @@
 .navbar.navbar-inverse.navbar-fixed-top
   .navbar-inner
     .container
+      = link_to 'IFNY', root_path, class: 'brand'
       .nav-collapse.collapse
         %ul.nav
-          %li= link_to 'IFNY', root_path, class: 'brand'
-          %li= link_to 'Films', '#'
-          %li= link_to 'Theaters', '#'
+          %li= link_to 'Films', films_path
+          %li= link_to 'Theaters', theaters_path
