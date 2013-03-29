@@ -3,13 +3,13 @@ $(function() {
   $container.isotope({
     itemSelector: '.item',
     masonry: {
-      columnWidth: 180
+      columnWidth: 186
     }
   }).isotope('insert', $hidden.find('.item'));
 
   $('.item').click(function() {
     var $this = $(this),
-        tileStyle = $this.hasClass('expanded') ? { width: 170, height: 170 } : { width: 350, height: 350 };
+        tileStyle = $this.hasClass('expanded') ? { width: 176, height: 176 } : { width: 350, height: 350 };
     $this.toggleClass('expanded');
     $this.find('.item-content').animate(tileStyle);
     $container.isotope('reLayout');
