@@ -10,6 +10,7 @@ gem 'pg'
 gem 'haml-rails'
 
 gem 'carrierwave'
+gem 'rmagick'
 
 group :development, :test do
   gem 'faker'

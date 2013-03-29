@@ -90,6 +90,7 @@ GEM
     rake (10.0.4)
     rdoc (3.12.2)
       json (~> 1.4)
+    rmagick (2.13.2)
     sass (3.2.7)
     sass-rails (4.0.0.beta1)
       railties (>= 4.0.0.beta, < 5.0)
@@ -133,6 +134,7 @@ DEPENDENCIES
   jquery-turbolinks
   pg
   rails (= 4.0.0.beta1)
+  rmagick
   sass-rails (~> 4.0.0.beta1)
   turbolinks
   uglifier (>= 1.0.3)
