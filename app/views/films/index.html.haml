@@ -2,5 +2,9 @@
 #hidden
   - @films.each do |film|
     .item
-      .item-content= film.title
+      .item-content
+        - if film.poster?
+          = image_tag film.poster.thumb
+        - else
+          .line-height= film.title
 #container
