@@ -9,6 +9,8 @@ gem 'pg'
 
 gem 'haml-rails'
 
+gem 'carrierwave'
+
 group :development, :test do
   gem 'faker'
 end
