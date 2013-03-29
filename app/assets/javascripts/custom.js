@@ -7,6 +7,15 @@ $(function() {
     }
   }).isotope('insert', $hidden.find('.item'));
 
+  $('.item').click(function() {
+    var $this = $(this),
+        tileStyle = $this.hasClass('expanded') ? { width: 170, height: 170 } : { width: 350, height: 350 };
+    $this.toggleClass('expanded');
+    $this.find('.item-content').animate(tileStyle);
+    $container.isotope('reLayout');
+  });
+});
+
 // Randomly color item divs
 $(function() {
   $('.item-content').each(function() {

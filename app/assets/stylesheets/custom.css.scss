@@ -4,6 +4,25 @@
   padding-top: 60px;
 }
 
+.item {
+  width: 170px;
+  height: 170px;
+  margin: 5px;
+}
+
+.item.expanded {
+  width: 350px;
+  height: 350px;
+}
+
+.item-content {
+  height: 170px;
+  width: 170px;
+  color: black;
+  text-align: center;
+  line-height: 14em;
+}
+
 #hidden {
   display: none;
 }
