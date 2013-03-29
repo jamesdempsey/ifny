@@ -12,6 +12,8 @@ gem 'haml-rails'
 gem 'carrierwave'
 gem 'rmagick'
 
+gem 'nokogiri'
+
 group :development, :test do
   gem 'faker'
 end
