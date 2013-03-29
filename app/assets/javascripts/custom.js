@@ -1,8 +1,11 @@
 $(function() {
-  $('#container').isotope({
+  var $container = $('#container'), $hidden = $('#hidden');
+  $container.isotope({
+    itemSelector: '.item',
     masonry: {
-      columnWidth: 240
+      columnWidth: 180
     }
+  }).isotope('insert', $hidden.find('.item'));
 
 // Randomly color item divs
 $(function() {

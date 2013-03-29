@@ -1,4 +1,6 @@
 %h1= 'Films'
-#container
+#hidden
   - @films.each do |film|
-    .item= film.title
+    .item
+      .item-content= film.title
+#container
