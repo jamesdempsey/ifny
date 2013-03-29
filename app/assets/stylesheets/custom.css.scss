@@ -4,20 +4,23 @@
 
 .item {
   width: 176px;
-  height: 176px;
+  height: 264px;
   margin: 5px;
 }
 
 .item.expanded {
-  width: 350px;
-  height: 350px;
+  width: 352px;
+  height: 528px;
 }
 
 .item-content {
-  height: 176px;
   width: 176px;
+  height: 264px;
   color: black;
   text-align: center;
+}
+
+.line-height {
   line-height: 14em;
 }
 
