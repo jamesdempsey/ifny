@@ -38,6 +38,18 @@ class PosterUploader < CarrierWave::Uploader::Base
   # Create different versions of your uploaded files:
   version :thumb do
     process resize_to_fit: [352, 0]
+    process :get_dimensions
+
+    def dimensions
+      @dimensions
+    end
+  end
+
+  def get_dimensions
+    if @file
+      img = ::Magick::Image::read(@file.file).first
+      @dimensions = {width: img.columns, height: img.rows}
+    end
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
