@@ -2,20 +2,30 @@
   padding-top: 60px;
 }
 
+#container {
+  padding: 5px 3px 5px 5px;
+}
+
+#hidden {
+  display: none;
+}
+
 .item {
-  width: 176px;
-  height: 264px;
   margin: 5px;
+
+  img {
+    border-radius: 15px;
+  }
 }
 
 .item.expanded {
-  width: 352px;
-  height: 528px;
+  padding: 10px 0;
+  border: 2px solid #666;
+  border-radius: 15px;
+  background: black;
 }
 
 .item-content {
-  width: 176px;
-  height: 264px;
   color: black;
   text-align: center;
 }
@@ -24,10 +34,8 @@
   line-height: 14em;
 }
 
-#container {
-  padding: 5px 3px 5px 5px;
-}
-
-#hidden {
-  display: none;
+.item-description {
+  height: 0;
+  margin: 15px;
+  text-align: justify;
 }

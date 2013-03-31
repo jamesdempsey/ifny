@@ -1,5 +1,6 @@
 $(function() {
-  var $container = $('#container'), $hidden = $('#hidden');
+  var $container = $('#container'), $hidden = $('#hidden'), $item = $('.item');
+
   $container.isotope({
     itemSelector: '.item',
     masonry: {
@@ -7,31 +8,28 @@ $(function() {
     }
   }).isotope('insert', $hidden.find('.item'));
 
-  $('.item').click(function() {
-    var $this = $(this),
-        tileStyle = $this.hasClass('expanded') ?
-          { width: 176, height: $this.height() / 2 } : { width: 352, height: $this.height() * 2 };
-    $this.toggleClass('expanded');
-    $this.find('.item-content').animate(tileStyle);
-    $container.isotope('reLayout');
-  });
+  $item.click(function() {
+    var $this = $(this), $img = $this.find('img'),
+        itemStyle = $this.hasClass('expanded') ?
+          { width: 176, height: $this.height() / 2 } :
+          { width: 528, height: $this.height() * 2 },
+        imgStyle = $this.hasClass('expanded') ?
+          { top: '+=' + $this.height() * 2,
+            left: '+=' + $this.width() * 2,
+            width: $this.width() / 2 } :
+          { top: '-=' + $this.height() / 2,
+            left: '-=' + $this.width() / 2,
+            width: $this.width() * 2 };
+        scrollTo = function() {
+          $('html, body').animate({
+            scrollTop: $this.offset().top - 40
+          });
+        };
 
-  $('.item img').click(function() {
-    $(this).animate({
-      top: '-=' + $(this).height() / 2,
-      left: '-=' + $(this).width() / 2,
-      width: $(this).width() * 2
-    });
+    $this.toggleClass('expanded');
+    $this.css(itemStyle);
+    $img.animate(imgStyle);
+    $this.find('.item-content').stop().animate(itemStyle, scrollTo);
+    $container.isotope('reLayout', scrollTo);
   });
 });
-
-// Randomly color item divs
-//$(function() {
-  //$('.item-content').each(function() {
-    //var randRGB = function() {
-      //return Math.floor((256-199)*Math.random()) + 200;
-    //},
-    //hue = 'rgb(' + [randRGB(), randRGB(), randRGB()].join(',') + ')';
-    //$(this).css('background-color', hue);
-  //});
-//});
