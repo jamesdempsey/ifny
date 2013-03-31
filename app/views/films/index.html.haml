@@ -3,5 +3,15 @@
   - @films.each do |film|
     .item{style: container_dimensions(film.poster.thumb)}
       .item-content{style: container_dimensions(film.poster.thumb)}
-        = image_tag film.poster.thumb
+        .item-image
+          = image_tag film.poster.thumb
+        .item-description
+          .film-description
+            .title= film.title
+            = truncate film.description, length: 550, separator: ' ', omission: '... (more)'
+          .title= 'Playing at'
+          %ul
+            - film.theaters.each do |theater|
+              %li
+                = theater.name
 #container
