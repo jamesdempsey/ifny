@@ -1,9 +1,10 @@
-.navbar_fix {
+.navbar-fix {
   padding-top: 60px;
 }
 
 #container {
   padding: 5px 3px 5px 5px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
 }
 
 #hidden {
@@ -19,23 +20,31 @@
 }
 
 .item.expanded {
-  padding: 10px 0;
+  padding: 10px;
   border: 2px solid #666;
   border-radius: 15px;
   background: black;
 }
 
-.item-content {
-  color: black;
-  text-align: center;
-}
-
-.line-height {
-  line-height: 14em;
+.item-image {
+  display: inline-block;
 }
 
 .item-description {
-  height: 0;
-  margin: 15px;
+  width: 317px;
+  display: inline-block;
+  margin: 0 15px;
   text-align: justify;
+  vertical-align: top;
+  opacity: 0;
+}
+
+.title {
+  margin-bottom: 10px;
+  font-size: 125%;
+  text-transform: uppercase;
+}
+
+.film-description {
+  margin-bottom: 15px;
 }
