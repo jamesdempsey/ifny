@@ -13,8 +13,12 @@ module Scrapers
 
       film_desc = p_nodes.first.content
 
+      unless remote_poster_url = scrape_imdb_poster(film_title)
+        remote_poster_url = film_doc.css('.post img').first.attributes['src'].value
+      end
+
       film = Film.create!(title: film_title, description: film_desc,
-                          url: film_url, remote_poster_url: scrape_imdb_poster(film_title))
+                          url: film_url, remote_poster_url: remote_poster_url)
 
       li_nodes = film_doc.css('ul.showTimesListing li')
       showtimes_nodes = li_nodes.select do |showtime_node|
