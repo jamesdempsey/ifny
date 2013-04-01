@@ -32,4 +32,21 @@ class Theater < ActiveRecord::Base
       showtime_dates.push(showtime_date_string.gsub(/at,/, 'at'))
     end
   end
+
+  def truncated_film_showtimes(film_id)
+    film_showtimes = film_showtimes(film_id)
+
+    truncated = []
+
+    truncated_film_showtimes = film_showtimes.take_while do |showtime|
+      truncated.push(showtime)
+      truncated.join.length <= 230
+    end
+
+    if film_showtimes.size != truncated_film_showtimes.size
+      truncated_film_showtimes.push('...more')
+    else
+      truncated_film_showtimes
+    end
+  end
 end
