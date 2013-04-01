@@ -36,4 +36,44 @@ $(function() {
     $this.find('.item-content').stop().animate(itemStyle, scrollTo);
     $container.isotope('reLayout', scrollTo);
   });
+
+  // WAYYYYY EXPERIMENTALLLLLL
+  //
+  // HERE WE GO
+  //
+  $('a.theater-name').click(function(e) {
+    var $this = $(this), $film_showtimes = $this.closest('.film-showtimes'),
+      $index = $this.closest('.film-showtimes-index');
+    e.stopPropagation();
+    e.preventDefault();
+    $.getJSON($this.attr('href'), {film_id: $this.closest('.item').attr('id')},
+      function(data) {
+        var $showtimes = $.map(data.showtimes, function(showtime, index) {
+          return showtime;
+        }),
+        $showtimes_theater = [
+          '<div class="film-showtimes-theater"><ul><li>',
+          $showtimes.join('</li><li>'), '</li></ul>',
+          '<a href="#" class="back">Back</a></div>'
+        ].join('');
+
+        $index.animate({ opacity: 0}, function() {
+          $film_showtimes.append($showtimes_theater);
+          $('a.back').click(function(e) {
+            var $this = $(this), $film_showtimes = $this.closest('.film-showtimes'),
+              $theater = $film_showtimes.find('.film-showtimes-theater'),
+              $index = $film_showtimes.find('.film-showtimes-index');
+
+            e.stopPropagation();
+            e.preventDefault();
+            $theater.animate({ opacity: 0}, function() {
+              $index.animate({ opacity: 1});
+              $(this).remove();
+            });
+          });
+          $film_showtimes.animate({ opacity: 1});
+        });
+      }
+    );
+  });
 });
