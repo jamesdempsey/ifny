@@ -13,6 +13,7 @@
 
 .item {
   margin: 5px;
+  overflow: hidden;
 
   img {
     border-radius: 15px;
@@ -47,4 +48,16 @@
 
 .film-description {
   margin-bottom: 15px;
+}
+
+.film-showtimes {
+  position: relative;
+}
+
+.film-showtimes-index {
+  position: absolute;
+}
+
+.film-showtimes-theater {
+  position: absolute;
 }
