@@ -47,13 +47,16 @@ $(function() {
     e.stopPropagation();
     e.preventDefault();
     $.getJSON($this.attr('href'), {film_id: $this.closest('.item').attr('id')},
-      function(data) {
-        var $showtimes = $.map(data.showtimes, function(showtime, index) {
+      function(json) {
+        var $showtimes = $.map(json.showtimes, function(showtime, index) {
           return showtime;
-        }),
+        }), $theater = json.theater['theater'].name,
         $showtimes_theater = [
-          '<div class="film-showtimes-theater"><ul><li>',
-          $showtimes.join('</li><li>'), '</li></ul>',
+          '<div class="film-showtimes-theater">',
+          '<div class="title">', $theater, '</div>',
+          '<ul><li>',
+          $showtimes.join('</li><li>'),
+          '</li></ul>',
           '<a href="#" class="back">Back</a></div>'
         ].join('');
 
