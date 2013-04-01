@@ -11,9 +11,13 @@ $(function() {
   $item.click(function() {
     var $this = $(this), $img = $this.find('img'),
         $desc = $this.find('.item-description'),
+        expanded_height = $this.height() >= 250 ?
+          $this.height() * 2 : $this.height() * 5,
+        shrunk_height = $this.height() > 500 ?
+          $this.height() / 2 : $this.height() / 5,
         itemStyle = $this.hasClass('expanded') ?
-          { width: 176, height: $this.height() / 2 } :
-          { width: 704, height: $this.height() * 2 },
+          { width: 176, height: shrunk_height } :
+          { width: 704, height: expanded_height },
         imgStyle = $this.hasClass('expanded') ?
           { top: '+=' + $this.height() * 2,
             left: '+=' + $this.width() * 2,
