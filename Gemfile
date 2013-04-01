@@ -15,6 +15,8 @@ gem 'fog', '~> 1.3.1'
 
 gem 'nokogiri'
 
+gem 'active_model_serializers', '~> 0.7.0'
+
 group :development, :test do
   gem 'faker'
 end
