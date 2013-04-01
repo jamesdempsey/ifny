@@ -11,9 +11,9 @@ $(function() {
   $item.click(function() {
     var $this = $(this), $img = $this.find('img'),
         $desc = $this.find('.item-description'),
-        expanded_height = $this.height() >= 250 ?
+        expanded_height = $this.height() >= 176 ?
           $this.height() * 2 : $this.height() * 5,
-        shrunk_height = $this.height() > 500 ?
+        shrunk_height = $this.height() > 352 ?
           $this.height() / 2 : $this.height() / 5,
         itemStyle = $this.hasClass('expanded') ?
           { width: 176, height: shrunk_height } :
