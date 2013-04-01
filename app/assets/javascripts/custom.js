@@ -25,7 +25,7 @@ $(function() {
           { opacity: 0 } : { opacity: 1 },
         scrollTo = function() {
           $('html, body').animate({
-            scrollTop: $this.offset().top - 40
+            scrollTop: $this.offset().top - 45
           }, 200, 'linear');
         };
 
