@@ -40,19 +40,16 @@ class PosterUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
-  version :thumb do
-    process resize_to_fit: [352, 0]
-    process :get_dimensions
+  process resize_to_fit: [352, 0]
+  process :dimensions
 
-    def dimensions
-      @dimensions
-    end
-  end
-
-  def get_dimensions
+  def dimensions
     if @file
       img = ::Magick::Image::read(@file.file).first
-      @dimensions = {width: img.columns, height: img.rows}
+      if model
+        model.width = img.columns
+        model.height = img.rows
+      end
     end
   end
 
