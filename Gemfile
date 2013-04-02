@@ -11,6 +11,7 @@ gem 'haml-rails'
 
 gem 'carrierwave'
 gem 'rmagick'
+gem 'fog', '~> 1.3.1'
 
 gem 'nokogiri'
 
