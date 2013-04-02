@@ -17,8 +17,10 @@ module Scrapers
         remote_poster_url = film_doc.css('.post img').first.attributes['src'].value
       end
 
-      film = Film.create!(title: film_title, description: film_desc,
-                          url: film_url, remote_poster_url: remote_poster_url)
+      film = Film.create!(title: film_title, description: film_desc, url: film_url)
+
+      Image.create!(film_id: film.id, image_type: 'Poster',
+                    remote_poster_url: remote_poster_url)
 
       li_nodes = film_doc.css('ul.showTimesListing li')
       showtimes_nodes = li_nodes.select do |showtime_node|
