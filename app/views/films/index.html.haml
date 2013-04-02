@@ -1,10 +1,11 @@
 %h1= 'Films'
 #hidden
   - @films.each do |film|
-    .item{style: container_dimensions(film.poster.thumb), id: film.id}
-      .item-content{style: container_dimensions(film.poster.thumb)}
+    - poster = film.images.posters.first
+    .item{style: container_dimensions(poster), id: film.id}
+      .item-content{style: container_dimensions(poster)}
         .item-image
-          = image_tag film.poster.thumb
+          = image_tag poster.poster
         .item-description
           .film-description
             .title= film.title
