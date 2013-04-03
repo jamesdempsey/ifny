@@ -4,8 +4,8 @@ class Theater < ActiveRecord::Base
   has_many :showings
   has_many :films, -> { uniq true }, through: :showings
 
-  def film_showtimes(film_id)
-    film_showings = showings.select { |showing| showing.film_id == film_id }
+  def film_showtimes(film)
+    film_showings = film.showings.by_theater(self)
     film_showtimes = film_showings.map { |showing| showing.showtime }
 
     mjd_showtimes = film_showtimes.inject({}) do |mjd_hash, datetime|
@@ -33,8 +33,8 @@ class Theater < ActiveRecord::Base
     end
   end
 
-  def truncated_film_showtimes(film_id)
-    film_showtimes = film_showtimes(film_id)
+  def truncated_film_showtimes(film)
+    film_showtimes = film_showtimes(film)
 
     truncated = []
 

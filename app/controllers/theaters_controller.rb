@@ -5,7 +5,8 @@ class TheatersController < ApplicationController
 
   def show
     @theater = Theater.find(params[:id])
-    @showtimes = @theater.truncated_film_showtimes(params[:film_id].to_i)
+    film = Film.find(params[:film_id])
+    @showtimes = @theater.truncated_film_showtimes(film)
     render json: {theater: @theater, showtimes: @showtimes}
   end
 end
