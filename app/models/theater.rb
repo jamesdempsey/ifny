@@ -5,7 +5,7 @@ class Theater < ActiveRecord::Base
   has_many :films, -> { uniq true }, through: :showings
 
   def film_showtimes(film)
-    film_showings = film.showings.by_theater(self)
+    film_showings = film.showings.by_theater(self).active
     film_showtimes = film_showings.map { |showing| showing.showtime }
 
     mjd_showtimes = film_showtimes.inject({}) do |mjd_hash, datetime|
