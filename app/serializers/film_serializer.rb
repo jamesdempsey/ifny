@@ -1,4 +1,6 @@
-class TheaterSerializer < ActiveModel::Serializer
+class FilmSerializer < ActiveModel::Serializer
+  #embed :ids, include: true
+
   attributes :id
 
   has_many :showings
