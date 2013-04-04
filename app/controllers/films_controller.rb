@@ -1,5 +1,7 @@
 class FilmsController < ApplicationController
+  respond_to :html, :json
+
   def index
-    @films = Film.active
+    respond_with @films = Film.active
   end
 end

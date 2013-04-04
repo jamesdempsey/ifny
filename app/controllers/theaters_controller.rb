@@ -1,12 +1,11 @@
 class TheatersController < ApplicationController
+  respond_to :html, :json
+
   def index
-    @theaters = Theater.all
+    respond_with @theaters = Theater.all
   end
 
   def show
-    @theater = Theater.find(params[:id])
-    film = Film.find(params[:film_id])
-    @showtimes = @theater.truncated_film_showtimes(film)
-    render json: {theater: @theater, showtimes: @showtimes}
+    respond_with @theater = Theater.find(params[:id])
   end
 end
