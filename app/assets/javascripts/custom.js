@@ -3,6 +3,7 @@ $(function() {
     $hidden = $('#hidden'),
     $item = $('.item');
 
+  // Initialize isotope
   $container.isotope({
     itemSelector: '.item',
     masonry: {
@@ -10,11 +11,14 @@ $(function() {
     }
   }).isotope('insert', $hidden.find('.item'));
 
+  // Catch theater name link clicks on dom ready
   $('a.theater-name').click(function(e) {
     e.preventDefault();
     e.stopPropagation();
   });
 
+  // self-executing .getJSON on dom ready to use for showtime divs
+  // hookup theater name link clicks to .getJSON callback
   (function() {
     $.getJSON('/films', function(json) {
       $('a.theater-name').click(function(e) {
@@ -69,6 +73,7 @@ $(function() {
     })
   })();
 
+  // isotope item container click handler
   $item.click(function() {
     var $this = $(this), $img = $this.find('img'),
         $desc = $this.find('.item-description'),
