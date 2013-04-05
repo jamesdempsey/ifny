@@ -26,14 +26,23 @@ $(function() {
           $film = $.grep(json['films'], function(film) {
             return film.id == $film_id;
           })[0],
-          $film_showtimes = $.map($film.showings, function(showing, index) {
+          $film_showtimes = $.map($film.showings, function(showing, i) {
             return showing.showtime;
           }),
-          $showtimes_theater = [
+          $truncated_film_showtimes = $film_showtimes.reduce(function(arr, e) {
+            if ([arr.join(''), e].join('').length <= 160) {
+              arr.push(e);
+            };
+            return arr;
+          }, []);
+          if ($truncated_film_showtimes.length != $film_showtimes.length) {
+            $truncated_film_showtimes.push('...more');
+          };
+          var $showtimes_theater = [
             '<div class="film-showtimes-theater">',
             '<div class="title">', $this.text(), '</div>',
             '<ul><li>',
-            $film_showtimes.join('</li><li>'),
+            $truncated_film_showtimes.join('</li><li>'),
             '</li></ul>',
             '<a href="#" class="back">Back</a></div>'
           ].join('');
