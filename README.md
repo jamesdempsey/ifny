@@ -12,4 +12,6 @@ An excursion in [Isotope.js](http://isotope.metafizzy.co/).
 
 And some other sweet gems.
 
+Actually, [ActiveModel::Serializers](https://github.com/rails-api/active_model_serializers) is kind of a big deal, Rails -> JSON API
+
 [Check it out](http://infy.herokuapp.com/).
