@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130402191916) do
+ActiveRecord::Schema.define(version: 20130405193436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,9 @@ ActiveRecord::Schema.define(version: 20130402191916) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "showings", ["film_id"], name: "index_showings_on_film_id"
+  add_index "showings", ["theater_id"], name: "index_showings_on_theater_id"
 
   create_table "theaters", force: true do |t|
     t.string   "name"
