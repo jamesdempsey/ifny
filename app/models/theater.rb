@@ -3,4 +3,7 @@ class Theater < ActiveRecord::Base
 
   has_many :showings
   has_many :films, -> { uniq true }, through: :showings
+
+  URLS = {ifc: 'http://www.ifccenter.com/',
+          angelika: 'http://www.angelikafilmcenter.com/'}
 end
