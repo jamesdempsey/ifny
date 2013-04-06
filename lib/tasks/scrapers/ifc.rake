@@ -2,9 +2,6 @@ namespace :db do
   namespace :scrape do
     desc 'Scrape IFC Center'
     task ifc: :environment do
-      require 'nokogiri'
-      require 'open-uri'
-      require 'cgi'
       require "#{Rails.root}/lib/scrapers"
       include Scrapers
 

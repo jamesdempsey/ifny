@@ -2,9 +2,6 @@ namespace :db do
   namespace :scrape do
     desc 'Scrape Angelika New York'
     task angelika: :environment do
-      require 'nokogiri'
-      require 'open-uri'
-      require 'cgi'
       require "#{Rails.root}/lib/scrapers"
       include Scrapers
 

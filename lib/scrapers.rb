@@ -1,4 +1,8 @@
 module Scrapers
+  require 'nokogiri'
+  require 'open-uri'
+  require 'cgi'
+
   def scrape_ifc_doc(film_url)
     unless Film.find_by_url(film_url)
       ifc = Theater.find_by_url(Theater.ifc_url)
