@@ -6,5 +6,5 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Theater.create!(name: 'IFC Center', url: 'http://www.ifccenter.com/')
-Theater.create!(name: 'Angelika New York', url: 'http://www.angelikafilmcenter.com/angelika_index.asp?hID=1')
+Theater.create!(name: 'IFC Center', url: Theater.ifc_url)
+Theater.create!(name: 'Angelika New York', url: Theater.angelika_url)

@@ -8,7 +8,7 @@ namespace :db do
       require "#{Rails.root}/lib/scrapers"
       include Scrapers
 
-      angelika_now_showing_url = 'http://www.angelikafilmcenter.com/angelika_nowshowing.asp?hID=1'
+      angelika_now_showing_url = Theater.angelika_url('angelika_index.asp?hID=1')
 
       scrape_angelika_now_showing(angelika_now_showing_url)
     end

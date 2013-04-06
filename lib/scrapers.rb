@@ -1,7 +1,7 @@
 module Scrapers
   def scrape_ifc_doc(film_url)
     unless Film.find_by_url(film_url)
-      ifc = Theater.find_by_url('http://www.ifccenter.com/')
+      ifc = Theater.find_by_url(Theater.ifc_url)
 
       film_doc = Nokogiri::HTML(open(film_url))
 
@@ -62,7 +62,7 @@ module Scrapers
     next_node = a_nodes.select { |a| a.content['Next'] }
 
     if next_node.present?
-      next_url = 'http://www.ifccenter.com' + next_node.first.attributes['href'].value
+      next_url = Theater.ifc_url(next_node.first.attributes['href'].value[1..-1])
       scrape_ifc_coming_soon(next_url)
     end
   end
@@ -73,7 +73,7 @@ module Scrapers
     ifc_now_playing.css('.calendarListing li').each do |li_node|
       film_url = li_node.css('a').first.attributes['href'].value
 
-      if URI.parse(film_url).host.downcase == 'www.ifccenter.com'
+      if URI.parse(film_url).host.downcase == URI.parse(Theater.ifc_url).host
         scrape_ifc_doc(film_url)
       end
     end
@@ -111,7 +111,7 @@ module Scrapers
   end
 
   def scrape_angelika_doc(film_url)
-    angelika_new_york = Theater.find_by_url('http://www.angelikafilmcenter.com/angelika_index.asp?hID=1')
+    angelika_new_york = Theater.find_by_url(Theater.angelika_url)
 
     film_doc = Nokogiri::HTML(open(film_url))
 
@@ -122,7 +122,7 @@ module Scrapers
 
     unless remote_poster_url = scrape_imdb_poster(film_title)
       img_src_url = film_doc.css('#movieDelivery img').first.attributes['src'].value
-      remote_poster_url = 'http://www.angelikafilmcenter.com/' << img_src_url
+      remote_poster_url = Theater.angelika_url(img_src_url)
     end
 
     film = Film.find_or_create_by(title: film_title)
@@ -159,10 +159,6 @@ module Scrapers
   end
 
   def scrape_angelika_now_showing(angelika_now_showing_url)
-    angelika_url_scheme = URI.parse(angelika_now_showing_url).scheme
-    angelika_url_host = URI.parse(angelika_now_showing_url).host
-    angelika_url = [angelika_url_scheme, angelika_url_host].join('://')
-
     angelika_now_showing = Nokogiri::HTML(open(angelika_now_showing_url))
 
     dates = angelika_now_showing.css('.dropdownChooseDate option').map do |dropdown_option|
@@ -179,7 +175,7 @@ module Scrapers
           a_node.content =~ /MORE/
         end
 
-        film_url = [angelika_url, a_nodes.first.attributes['href'].value].join('/')
+        film_url = Theater.angelika_url(a_nodes.first.attributes['href'].value)
 
         scrape_angelika_doc(film_url)
       end
