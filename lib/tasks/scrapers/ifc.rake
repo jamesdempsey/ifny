@@ -2,7 +2,6 @@ namespace :db do
   namespace :scrape do
     desc 'Scrape IFC Center'
     task ifc: :environment do
-      require "#{Rails.root}/lib/scrapers"
       include Scrapers
 
       ifc_now_playing_url = Theater.ifc_url
