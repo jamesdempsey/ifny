@@ -42,10 +42,11 @@ module Scrapers
       end
 
       film = Film.find_or_create_by(title: film_title)
-      film.update(description: film_desc, url: film_url)
+      film.update(description: film_desc) unless film_desc == film.description
+      film.update(url: film_url) unless film_url == film.url
 
-      poster = Image.find_or_create_by(film_id: film.id, image_type: 'Poster')
-      poster.update(remote_poster_url: remote_poster_url)
+      image = Image.find_or_create_by(film_id: film.id, image_type: 'Poster')
+      image.update(remote_poster_url: remote_poster_url) unless image.poster?
 
       showtimes_p_node = film_doc.css('p.contentText').first
 
