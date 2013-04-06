@@ -2,7 +2,7 @@ namespace :db do
   namespace :scrape do
     desc 'Scrape Angelika New York'
     task angelika: :environment do
-      include Scrapers
+      include Scrapers::Angelika
 
       angelika_now_showing_url = Theater.angelika_url('angelika_index.asp?hID=1')
 
