@@ -40,8 +40,8 @@ module Scrapers
           showtime = [showing_date, showing_time_node.content, 'EDT'].join(' ')
           film_showtime = DateTime.parse(showtime)
 
-          Showing.create!(film_id: film.id, theater_id: ifc.id,
-                          showtime: film_showtime)
+          Showing.find_or_create_by(film_id: film.id, theater_id: ifc.id,
+                                    showtime: film_showtime)
         end
       end
     end
