@@ -7,3 +7,4 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Theater.create!(name: 'IFC Center', url: 'http://www.ifccenter.com/')
+Theater.create!(name: 'Angelika New York', url: 'http://www.angelikafilmcenter.com/angelika_index.asp?hID=1')
