@@ -35,49 +35,48 @@ module Scrapers
     end
 
     def scrape_ifc_doc(film_url)
-      unless Film.find_by_url(film_url)
-        ifc = Theater.find_by_url(Theater.ifc_url)
+      ifc = Theater.find_by_url(Theater.ifc_url)
 
-        film_doc = Nokogiri::HTML(open(film_url))
+      film_doc = Nokogiri::HTML(open(film_url))
 
-        film_title = film_doc.css('.post h1').first.content
+      film_title = film_doc.css('.post h1').first.content
 
-        p_nodes = film_doc.css('.post p').select do |p_node|
-          p_node.content.split.size > 30
+      p_nodes = film_doc.css('.post p').select do |p_node|
+        p_node.content.split.size > 30
+      end
+
+      film_desc = p_nodes.first.content
+
+      unless remote_poster_url = scrape_imdb_poster(film_title)
+        remote_poster_url = film_doc.css('.post img').first.attributes['src'].value
+      end
+
+      film = Film.find_or_create_by(title: film_title)
+      film.update(description: film_desc, url: film_url)
+
+      poster = Image.find_or_create_by(film_id: film.id, image_type: 'Poster')
+      poster.update(remote_poster_url: remote_poster_url)
+
+      li_nodes = film_doc.css('ul.showTimesListing li')
+      showtimes_nodes = li_nodes.select do |showtime_node|
+        showtime_node.content[' at:']
+      end
+
+      showtimes_nodes.each do |showtime_node|
+        showing_date = showtime_node.css('strong').first.content
+        showing_date.slice!(' at:')
+
+        a_nodes = showtime_node.css('a')
+        showing_time_nodes = a_nodes.select do |showing_time_node|
+          showing_time_node.content.present?
         end
 
-        film_desc = p_nodes.first.content
+        showing_time_nodes.each do |showing_time_node|
+          showtime = [showing_date, showing_time_node.content, 'EDT'].join(' ')
+          film_showtime = DateTime.parse(showtime)
 
-        unless remote_poster_url = scrape_imdb_poster(film_title)
-          remote_poster_url = film_doc.css('.post img').first.attributes['src'].value
-        end
-
-        film = Film.create!(title: film_title, description: film_desc, url: film_url)
-
-        Image.create!(film_id: film.id, image_type: 'Poster',
-                      remote_poster_url: remote_poster_url)
-
-        li_nodes = film_doc.css('ul.showTimesListing li')
-        showtimes_nodes = li_nodes.select do |showtime_node|
-          showtime_node.content[' at:']
-        end
-
-        showtimes_nodes.each do |showtime_node|
-          showing_date = showtime_node.css('strong').first.content
-          showing_date.slice!(' at:')
-
-          a_nodes = showtime_node.css('a')
-          showing_time_nodes = a_nodes.select do |showing_time_node|
-            showing_time_node.content.present?
-          end
-
-          showing_time_nodes.each do |showing_time_node|
-            showtime = [showing_date, showing_time_node.content, 'EDT'].join(' ')
-            film_showtime = DateTime.parse(showtime)
-
-            Showing.find_or_create_by(film_id: film.id, theater_id: ifc.id,
-                                      showtime: film_showtime)
-          end
+          Showing.find_or_create_by(film_id: film.id, theater_id: ifc.id,
+                                    showtime: film_showtime)
         end
       end
     end
