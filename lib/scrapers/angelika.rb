@@ -27,7 +27,7 @@ module Scrapers
     end
 
     def scrape_angelika_doc(film_url)
-      angelika_new_york = Theater.find_by_url(Theater.angelika_url)
+      angelika = Theater.find_by_url(Theater.angelika_url)
 
       film_doc = Nokogiri::HTML(open(film_url))
 
@@ -68,7 +68,7 @@ module Scrapers
           film_showtime = DateTime.parse(showtime)
 
           Showing.find_or_create_by(film_id: film.id,
-                                    theater_id: angelika_new_york.id,
+                                    theater_id: angelika.id,
                                     showtime: film_showtime)
         end
       end
