@@ -42,16 +42,18 @@ $(function() {
           if ($truncated_film_showtimes.length != $film_showtimes.length) {
             $truncated_film_showtimes.push('...more');
           };
-          var $showtimes_theater = [
-            '<div class="film-showtimes-theater">',
-            '<div class="title">', $this.text(), '</div>',
-            '<ul><li>',
-            $truncated_film_showtimes.join('</li><li>'),
-            '</li></ul>',
-            '<a href="#" class="back">Back</a></div>'
-          ].join('');
+        var $showtimes_theater = [
+          '<div class="film-showtimes-theater">',
+          '<div class="title">', $this.text(), '</div>',
+          '<ul><li>',
+          $truncated_film_showtimes.join('</li><li>'),
+          '</li></ul>',
+          '<a href="#" class="back">Back</a></div>'
+        ].join('');
 
-        $film_showtimes_index_div.animate({ opacity: 0}, function() {
+        $film_showtimes_index_div.animate({opacity: 0}, function() {
+          var $this = $(this);
+
           $film_showtimes_div.append($showtimes_theater);
           $('a.back').click(function(e) {
             var $this = $(this),
@@ -61,13 +63,13 @@ $(function() {
 
             e.stopPropagation();
             e.preventDefault();
-            $theater.animate({ opacity: 0}, function() {
-              $film_showtimes_index_div.animate({ opacity: 1});
+            $theater.animate({opacity: 0}, function() {
+              $film_showtimes_index_div.animate({opacity: 1});
               $(this).remove();
             });
           });
 
-          $film_showtimes_div.animate({ opacity: 1}, 'slow');
+          $this.next('.film-showtimes-theater').animate({opacity: 1});
         });
       });
     })
