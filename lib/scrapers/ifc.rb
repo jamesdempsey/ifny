@@ -68,7 +68,7 @@ module Scrapers
         end
 
         showing_time_nodes.each do |showing_time_node|
-          find_or_create_showing(showtime_date, showing_time_node.content, film.id, ifc.id)
+          find_or_create_showing(showing_date, showing_time_node.content, film.id, ifc.id)
         end
       end
     end
