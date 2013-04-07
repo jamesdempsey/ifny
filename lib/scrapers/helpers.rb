@@ -34,5 +34,21 @@ module Scrapers
     def nodes_between(first, last)
       first == last ? [first] : [first, *nodes_between(first.next, last)]
     end
+
+    def find_or_create_film(film_title, film_desc, film_url, remote_poster_url)
+      film = Film.find_or_create_by(title: film_title)
+      film.update(description: film_desc) unless film_desc == film.description
+      film.update(url: film_url) unless film_url == film.url
+
+      image = Image.find_or_create_by(film_id: film.id, image_type: 'Poster')
+      image.update(remote_poster_url: remote_poster_url) unless image.poster?
+    end
+
+    def find_or_create_showing(date, node_content, film_id, theater_id)
+      showtime = [date, node_content, 'EDT'].join(' ')
+      film_showtime = DateTime.parse(showtime)
+
+      Showing.find_or_create_by(film_id: film_id, theater_id: theater_id, showtime: film_showtime)
+    end
   end
 end

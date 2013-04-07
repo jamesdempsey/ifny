@@ -51,12 +51,7 @@ module Scrapers
         remote_poster_url = film_doc.css('.post img').first.attributes['src'].value
       end
 
-      film = Film.find_or_create_by(title: film_title)
-      film.update(description: film_desc) unless film_desc == film.description
-      film.update(url: film_url) unless film_url == film.url
-
-      image = Image.find_or_create_by(film_id: film.id, image_type: 'Poster')
-      image.update(remote_poster_url: remote_poster_url) unless image.poster?
+      find_or_create_film(film_title, film_desc, film_url, remote_poster_url)
 
       li_nodes = film_doc.css('ul.showTimesListing li')
       showtimes_nodes = li_nodes.select do |showtime_node|
@@ -73,11 +68,7 @@ module Scrapers
         end
 
         showing_time_nodes.each do |showing_time_node|
-          showtime = [showing_date, showing_time_node.content, 'EDT'].join(' ')
-          film_showtime = DateTime.parse(showtime)
-
-          Showing.find_or_create_by(film_id: film.id, theater_id: ifc.id,
-                                    showtime: film_showtime)
+          find_or_create_showing(showtime_date, showing_time_node.content, film.id, ifc.id)
         end
       end
     end

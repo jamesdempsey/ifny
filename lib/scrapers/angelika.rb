@@ -41,12 +41,7 @@ module Scrapers
         remote_poster_url = Theater.angelika_url(img_src_url)
       end
 
-      film = Film.find_or_create_by(title: film_title)
-      film.update(description: film_desc) unless film_desc == film.description
-      film.update(url: film_url) unless film_url == film.url
-
-      image = Image.find_or_create_by(film_id: film.id, image_type: 'Poster')
-      image.update(remote_poster_url: remote_poster_url) unless image.poster?
+      find_or_create_film(film_title, film_desc, film_url, remote_poster_url)
 
       showtimes_p_node = film_doc.css('p.contentText').first
 
@@ -65,12 +60,7 @@ module Scrapers
           showtime_date = showtime_span_node.content
           showtime_date = Time.now.to_date.to_s if showtime_date.downcase == 'today'
 
-          showtime = [showtime_date, a_node.content, 'EDT'].join(' ')
-          film_showtime = DateTime.parse(showtime)
-
-          Showing.find_or_create_by(film_id: film.id,
-                                    theater_id: angelika.id,
-                                    showtime: film_showtime)
+          find_or_create_showing(showtime_date, a_node.content, film.id, angelika.id)
         end
       end
     end
