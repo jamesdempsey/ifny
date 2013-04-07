@@ -50,6 +50,7 @@ $(function() {
             '</li></ul>',
             '<a href="#" class="back">Back</a></div>'
           ].join('');
+          var $this = $(this);
 
         $film_showtimes_index_div.animate({ opacity: 0}, function() {
           $film_showtimes_div.append($showtimes_theater);
@@ -67,7 +68,7 @@ $(function() {
             });
           });
 
-          $film_showtimes_div.animate({ opacity: 1}, 'slow');
+          $this.next('.film-showtimes-theater').animate({opacity: 1});
         });
       });
     })
