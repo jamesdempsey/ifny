@@ -51,7 +51,7 @@ module Scrapers
         remote_poster_url = film_doc.css('.post img').first.attributes['src'].value
       end
 
-      find_or_create_film(film_title, film_desc, film_url, remote_poster_url)
+      film = find_or_create_film(film_title, film_desc, film_url, remote_poster_url)
 
       li_nodes = film_doc.css('ul.showTimesListing li')
       showtimes_nodes = li_nodes.select do |showtime_node|

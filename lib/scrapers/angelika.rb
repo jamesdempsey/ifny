@@ -41,7 +41,7 @@ module Scrapers
         remote_poster_url = Theater.angelika_url(img_src_url)
       end
 
-      find_or_create_film(film_title, film_desc, film_url, remote_poster_url)
+      film = find_or_create_film(film_title, film_desc, film_url, remote_poster_url)
 
       showtimes_p_node = film_doc.css('p.contentText').first
 
