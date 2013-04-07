@@ -42,6 +42,8 @@ module Scrapers
 
       image = Image.find_or_create_by(film_id: film.id, image_type: 'Poster')
       image.update(remote_poster_url: remote_poster_url) unless image.poster?
+
+      film
     end
 
     def find_or_create_showing(date, node_content, film_id, theater_id)
