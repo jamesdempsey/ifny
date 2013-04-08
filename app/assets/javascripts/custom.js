@@ -28,7 +28,7 @@ $(function() {
     scrollTo = function(item) {
       $('html, body').animate({
         scrollTop: item.offset().top - 45
-      }, 200, 'linear');
+      }, 75, 'linear');
     },
 
     // item container expand function
