@@ -1,7 +1,49 @@
 $(function() {
   var $container = $('#container'),
     $hidden = $('#hidden'),
-    $item = $('.item');
+    $item = $('.item'),
+    expand = function(item) {
+      var $img = item.find('img'),
+        $desc = item.find('.item-description'),
+        height = item.height() >= 176 ? item.height() * 2 : item.height() * 5,
+        itemStyle = { width: 704, height: height },
+        imgStyle = { top: '-=' + item.height() / 2,
+          left: '-=' + item.width() / 2,
+          width: item.width() * 2 },
+        descStyle = { opacity: 1 };
+
+      shrink($('.expanded'));
+      item.addClass('expanded');
+      $desc.animate(descStyle);
+      item.css(itemStyle);
+      $img.animate(imgStyle);
+      item.find('.item-content').stop().animate(itemStyle, scrollTo(item));
+      $container.isotope('reLayout', scrollTo(item));
+    },
+    shrink = function(item) {
+      var $img = item.find('img'),
+        $desc = item.find('.item-description'),
+        height = item.height() > 352 ? item.height() / 2 : item.height() / 5,
+        itemStyle = { width: 176, height: height },
+        imgStyle = { top: '+=' + item.height() * 2,
+          left: '+=' + item.width() * 2,
+          width: item.width() / 2 },
+        descStyle = { opacity: 0 };
+
+      item.removeClass('expanded');
+      $desc.animate(descStyle);
+      item.css(itemStyle);
+      $img.animate(imgStyle);
+      item.find('.item-content').stop().animate(itemStyle, function() {
+        $container.isotope('reLayout');
+      });
+    },
+    scrollTo = function(item) {
+      $('html, body').animate({
+        scrollTop: item.offset().top - 45
+      }, 200, 'linear');
+      console.log('scrolling');
+    };
 
   // Initialize isotope
   $container.isotope({
@@ -75,35 +117,8 @@ $(function() {
 
   // isotope item container click handler
   $item.click(function() {
-    var $this = $(this), $img = $this.find('img'),
-        $desc = $this.find('.item-description'),
-        expanded_height = $this.height() >= 176 ?
-          $this.height() * 2 : $this.height() * 5,
-        shrunk_height = $this.height() > 352 ?
-          $this.height() / 2 : $this.height() / 5,
-        itemStyle = $this.hasClass('expanded') ?
-          { width: 176, height: shrunk_height } :
-          { width: 704, height: expanded_height },
-        imgStyle = $this.hasClass('expanded') ?
-          { top: '+=' + $this.height() * 2,
-            left: '+=' + $this.width() * 2,
-            width: $this.width() / 2 } :
-          { top: '-=' + $this.height() / 2,
-            left: '-=' + $this.width() / 2,
-            width: $this.width() * 2 },
-        descStyle = $this.hasClass('expanded') ?
-          { opacity: 0 } : { opacity: 1 },
-        scrollTo = function() {
-          $('html, body').animate({
-            scrollTop: $this.offset().top - 45
-          }, 200, 'linear');
-        };
+    var $this = $(this);
 
-    $this.toggleClass('expanded');
-    $desc.animate(descStyle);
-    $this.css(itemStyle);
-    $img.animate(imgStyle);
-    $this.find('.item-content').stop().animate(itemStyle, scrollTo);
-    $container.isotope('reLayout', scrollTo);
+    expand($this);
   });
 });
