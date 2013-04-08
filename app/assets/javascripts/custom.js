@@ -18,9 +18,7 @@ $(function() {
       $desc.animate(descStyle);
       item.css(itemStyle);
       $img.animate(imgStyle);
-      item.find('.item-content').stop().animate(itemStyle, function() {
-        $container.isotope('reLayout');
-      });
+      item.find('.item-content').stop().animate(itemStyle);
       item.on('click.expand', function() {
         expand(item);
       });
@@ -50,7 +48,7 @@ $(function() {
       item.css(itemStyle);
       $img.animate(imgStyle);
       item.find('.item-content').stop().animate(itemStyle, scrollTo(item));
-      $container.isotope('reLayout', scrollTo($(item)));
+      $container.isotope('reLayout', scrollTo(item));
       item.off('click.expand');
     };
 
