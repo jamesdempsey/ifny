@@ -5,19 +5,14 @@ $(function() {
 
     // item container shrink function
     shrink = function(item) {
-      var $img = item.find('img'),
-        $desc = item.find('.item-description'),
+      var $desc = item.find('.item-description'),
         height = item.height() > 352 ? item.height() / 2 : item.height() / 5,
         itemStyle = { width: 176, height: height },
-        imgStyle = { top: '+=' + item.height() * 2,
-          left: '+=' + item.width() * 2,
-          width: item.width() / 2 },
         descStyle = { opacity: 0 };
 
       item.removeClass('expanded');
       $desc.animate(descStyle);
       item.css(itemStyle);
-      $img.animate(imgStyle);
       item.find('.item-content').stop().animate(itemStyle);
       item.on('click.expand', function() {
         expand(item);
@@ -33,20 +28,15 @@ $(function() {
 
     // item container expand function
     expand = function(item) {
-      var $img = item.find('img'),
-        $desc = item.find('.item-description'),
+      var $desc = item.find('.item-description'),
         height = item.height() >= 176 ? item.height() * 2 : item.height() * 5,
         itemStyle = { width: 704, height: height },
-        imgStyle = { top: '-=' + item.height() / 2,
-          left: '-=' + item.width() / 2,
-          width: item.width() * 2 },
         descStyle = { opacity: 1 };
 
       shrink($('.expanded'));
       item.addClass('expanded');
       $desc.animate(descStyle);
       item.css(itemStyle);
-      $img.animate(imgStyle);
       item.find('.item-content').stop().animate(itemStyle);
       $container.isotope('reLayout');
       item.off('click.expand');
