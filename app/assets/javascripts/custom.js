@@ -21,6 +21,9 @@ $(function() {
       item.find('.item-content').stop().animate(itemStyle, function() {
         $container.isotope('reLayout');
       });
+      item.on('click.expand', function() {
+        expand(item);
+      });
     },
 
     // item container scroll function
@@ -48,6 +51,7 @@ $(function() {
       $img.animate(imgStyle);
       item.find('.item-content').stop().animate(itemStyle, scrollTo(item));
       $container.isotope('reLayout', scrollTo($(item)));
+      item.off('click.expand');
     };
 
   // Initialize isotope
@@ -120,8 +124,8 @@ $(function() {
     });
   }());
 
-  // isotope item container click handler
-  $item.click(function() {
+  // isotope item container click listener
+  $item.on('click.expand', function() {
     expand($(this));
   });
 });
