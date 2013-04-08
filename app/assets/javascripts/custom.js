@@ -28,7 +28,7 @@ $(function() {
       $('html, body').animate({
         scrollTop: item.offset().top - 45
       }, 200, 'linear');
-    };
+    },
 
     // item container expand function
     expand = function(item) {
@@ -48,7 +48,7 @@ $(function() {
       $img.animate(imgStyle);
       item.find('.item-content').stop().animate(itemStyle, scrollTo(item));
       $container.isotope('reLayout', scrollTo($(item)));
-    },
+    };
 
   // Initialize isotope
   $container.isotope({
@@ -74,18 +74,19 @@ $(function() {
           $film_showtimes_index_div = $this.closest('.film-showtimes-index'),
           $film_id = +$this.closest('.item').attr('id'),
           $theater_id = +$this.attr('href').match(/\d+/),
-          $film = $.grep(json['films'], function(film) {
-            return film.id == $film_id;
+          $film = $.grep(json.films, function(film) {
+            return film.id === $film_id;
           })[0],
           $truncated_film_showtimes = $film.showings_by_date.reduce(function(arr, e) {
             if ([arr.join(''), e].join('').length <= 230) {
               arr.push(e);
-            };
+            }
             return arr;
           }, []);
-          if ($truncated_film_showtimes.length != $film.showings_by_date.length) {
-            $truncated_film_showtimes.push('...more');
-          };
+
+        if ($truncated_film_showtimes.length !== $film.showings_by_date.length) {
+          $truncated_film_showtimes.push('...more');
+        }
 
         var $showtimes_theater = [
           '<div class="film-showtimes-theater">',
