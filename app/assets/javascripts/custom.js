@@ -68,12 +68,11 @@ $(function() {
   // hookup theater name link clicks to .getJSON callback
   (function() {
     $.getJSON('/films', function(json) {
-      $('a.theater-name').click(function(e) {
+      $('a.theater-name').click(function() {
         var $this = $(this),
           $film_showtimes_div = $this.closest('.film-showtimes'),
           $film_showtimes_index_div = $this.closest('.film-showtimes-index'),
           $film_id = +$this.closest('.item').attr('id'),
-          $theater_id = +$this.attr('href').match(/\d+/),
           $film = $.grep(json.films, function(film) {
             return film.id === $film_id;
           })[0],
@@ -118,8 +117,8 @@ $(function() {
           $this.next('.film-showtimes-theater').animate({opacity: 1});
         });
       });
-    })
-  })();
+    });
+  }());
 
   // isotope item container click handler
   $item.click(function() {
