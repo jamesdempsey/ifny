@@ -47,8 +47,8 @@ $(function() {
       $desc.animate(descStyle);
       item.css(itemStyle);
       $img.animate(imgStyle);
-      item.find('.item-content').stop().animate(itemStyle, scrollTo(item));
-      $container.isotope('reLayout', scrollTo(item));
+      item.find('.item-content').stop().animate(itemStyle);
+      $container.isotope('reLayout');
       item.off('click.expand');
     };
 
@@ -57,6 +57,14 @@ $(function() {
     itemSelector: '.item',
     masonry: {
       columnWidth: 186
+    },
+    animationEngine: 'jquery',
+    onLayout: function($elems) {
+      var item = $elems.filter('.expanded');
+
+      if (item.hasClass('expanded')) {
+        scrollTo(item);
+      }
     }
   }).isotope('insert', $hidden.find('.item'));
 
