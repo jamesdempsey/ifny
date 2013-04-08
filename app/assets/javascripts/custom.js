@@ -2,6 +2,8 @@ $(function() {
   var $container = $('#container'),
     $hidden = $('#hidden'),
     $item = $('.item'),
+
+    // item container expand function
     expand = function(item) {
       var $img = item.find('img'),
         $desc = item.find('.item-description'),
@@ -20,6 +22,8 @@ $(function() {
       item.find('.item-content').stop().animate(itemStyle, scrollTo(item));
       $container.isotope('reLayout', scrollTo(item));
     },
+
+    // item container shrink function
     shrink = function(item) {
       var $img = item.find('img'),
         $desc = item.find('.item-description'),
@@ -38,6 +42,8 @@ $(function() {
         $container.isotope('reLayout');
       });
     },
+
+    // item container scroll function
     scrollTo = function(item) {
       $('html, body').animate({
         scrollTop: item.offset().top - 45
@@ -117,8 +123,6 @@ $(function() {
 
   // isotope item container click handler
   $item.click(function() {
-    var $this = $(this);
-
-    expand($this);
+    expand($(this));
   });
 });
