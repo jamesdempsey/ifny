@@ -71,6 +71,22 @@ module Scrapers
           find_or_create_showing(showing_date, showing_time_node.content, film.id, ifc.id)
         end
       end
+
+      if showtimes_nodes.empty?
+        film.coming_soon = true
+        film.save
+
+        film_doc.css('.post strong').each do |strong_node|
+          strong_node.content.scan(DATE).each do |date|
+            find_or_create_showing(date.first, '12:00', film.id, ifc.id)
+          end
+        end
+      else
+        if film.coming_soon == true
+          film.coming_soon = false
+          film.save
+        end
+      end
     end
   end
 end
