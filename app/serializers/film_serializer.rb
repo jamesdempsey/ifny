@@ -24,7 +24,7 @@ class FilmSerializer < ActiveModel::Serializer
         showtime_date_string = datetimes.first.strftime('%a, %b %-d')
 
         if showtime_dates.empty?
-          showtime_date_string = 'Opens ' << showtime_date_string
+          showtime_date_string = 'Opens ' + showtime_date_string
         end
       else
         date_string = datetimes.first.strftime('%a, %b %-d at')

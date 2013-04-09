@@ -82,10 +82,7 @@ module Scrapers
           end
         end
       else
-        if film.coming_soon == true
-          film.coming_soon = false
-          film.save
-        end
+        film.toggle!(:coming_soon) if film.coming_soon?
       end
     end
   end
