@@ -10,7 +10,7 @@ gem 'pg'
 gem 'haml-rails'
 
 gem 'carrierwave'
-gem 'rmagick'
+gem 'mini_magick'
 gem 'fog', '~> 1.3.1'
 
 gem 'nokogiri'
