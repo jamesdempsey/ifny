@@ -40,17 +40,21 @@ class PosterUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
-  process resize_to_fit: [352, 0]
   process :dimensions
 
   def dimensions
     if @file
       img = MiniMagick::Image.read(@file)
+      @img_height = 352 * img[:height] / img[:width]
       if model
-        model.width = img.columns
-        model.height = img.rows
+        model.width = 352
+        model.height = @img_height
       end
     end
+  end
+
+  version :resized do
+    process resize_to_fit: [352, @img_height]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
