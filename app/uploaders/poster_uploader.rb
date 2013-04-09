@@ -45,7 +45,7 @@ class PosterUploader < CarrierWave::Uploader::Base
 
   def dimensions
     if @file
-      img = ::Magick::Image::read(@file.file).first
+      img = MiniMagick::Image.read(@file)
       if model
         model.width = img.columns
         model.height = img.rows
