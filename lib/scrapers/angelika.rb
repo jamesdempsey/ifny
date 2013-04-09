@@ -26,7 +26,23 @@ module Scrapers
       end
     end
 
-    def scrape_angelika_doc(film_url)
+    def scrape_angelika_coming_soon(angelika_coming_soon_url)
+      angelika_coming_soon = Nokogiri::HTML(open(angelika_coming_soon_url))
+
+      angelika_coming_soon.css('#movieBlock').each do |div_node|
+        a_nodes = div_node.css('a.movieLink').select do |a_node|
+          a_node.content =~ /MORE/
+        end
+
+        coming_soon_date = div_node.css('.movieBlockDate').first.content
+
+        film_url = Theater.angelika_url(a_nodes.first.attributes['href'].value)
+
+        scrape_angelika_doc(film_url, coming_soon_date: coming_soon_date)
+      end
+    end
+
+    def scrape_angelika_doc(film_url, coming_soon_date: '')
       angelika = Theater.find_by_url(Theater.angelika_url)
 
       film_doc = Nokogiri::HTML(open(film_url))
@@ -62,6 +78,17 @@ module Scrapers
 
           find_or_create_showing(showtime_date, a_node.content, film.id, angelika.id)
         end
+      end
+
+      if showtimes_span_nodes.empty?
+        film.coming_soon = true
+        film.save
+
+        showtime_date = coming_soon_date.scan(ANGELIKA_DATE_REGEXP)
+
+        find_or_create_showing(showtime_date.first.first, '12:00', film.id, angelika.id)
+      else
+        film.toggle!(:coming_soon) if film.coming_soon?
       end
     end
   end
