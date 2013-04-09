@@ -1,5 +1,11 @@
 module Scrapers
   module Helpers
+    days = "((#{%w(Monday Tuesday Wednesday Thursday Friday
+              Saturday Sunday).join('|')})"
+    months = "(#{%w(January February March April May June July August
+                September October November December).join('|')})"
+    DATE = Regexp.new("#{days}, #{months} " + '\d{1,2})')
+
     def scrape_imdb_poster(film_title)
       imdb_url = 'http://www.imdb.com'
       imdb_search_url = [imdb_url, '/find?q=', CGI::escape(film_title), '&s=all'].join
