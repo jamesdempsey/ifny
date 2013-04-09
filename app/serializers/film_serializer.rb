@@ -19,14 +19,23 @@ class FilmSerializer < ActiveModel::Serializer
 
     mjd_showtimes.inject([]) do |showtime_dates, mjd|
       datetimes = mjd[1]
-      date_string = datetimes.first.strftime('%a, %b %-d at')
 
-      showtime_date_string = datetimes.inject(date_string) do |showtime_date_str, datetime|
-        datetime_string = datetime.strftime('%l:%M%P').strip
-        [showtime_date_str, datetime_string].join(', ')
+      if object.coming_soon?
+        showtime_date_string = datetimes.first.strftime('%a, %b %-d')
+
+        if showtime_dates.empty?
+          showtime_date_string = 'Opens ' << showtime_date_string
+        end
+      else
+        date_string = datetimes.first.strftime('%a, %b %-d at')
+
+        showtime_date_string = datetimes.inject(date_string) do |showtime_date_str, datetime|
+          datetime_string = datetime.strftime('%l:%M%P').strip
+          [showtime_date_str, datetime_string].join(', ')
+        end
       end
 
-      showtime_dates.push(showtime_date_string.gsub(/at,/, 'at'))
+      showtime_dates.push(showtime_date_string.gsub(/ at,/, ' at'))
     end
   end
 end
