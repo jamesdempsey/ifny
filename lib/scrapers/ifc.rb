@@ -77,7 +77,7 @@ module Scrapers
         film.save
 
         film_doc.css('.post strong').each do |strong_node|
-          strong_node.content.scan(DATE).each do |date|
+          strong_node.content.scan(IFC_DATE_REGEXP).each do |date|
             find_or_create_showing(date.first, '12:00', film.id, ifc.id)
           end
         end
