@@ -8,3 +8,4 @@
 
 Theater.create!(name: 'IFC Center', url: Theater.ifc_url)
 Theater.create!(name: 'Angelika New York', url: Theater.angelika_url)
+Theater.create!(name: 'Village East Cinema', url: Theater.village_east_url)

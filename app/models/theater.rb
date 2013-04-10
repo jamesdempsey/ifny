@@ -5,7 +5,8 @@ class Theater < ActiveRecord::Base
   has_many :films, -> { uniq true }, through: :showings
 
   URLS = {ifc: 'http://www.ifccenter.com/',
-          angelika: 'http://www.angelikafilmcenter.com/'}
+          angelika: 'http://www.angelikafilmcenter.com/',
+          village_east: 'http://www.villageeastcinema.com/'}
 
   URLS.each do |theater, url|
     define_singleton_method("#{theater}_url") { |*url_strings| [url, *url_strings].join }
