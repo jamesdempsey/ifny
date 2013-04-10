@@ -6,4 +6,5 @@ class Film < ActiveRecord::Base
   has_many :images
 
   scope :active, -> { joins(:showings).group('films.id').merge(Showing.active) }
+  scope :by_title, lambda { |title| where("title ilike ?", "%#{title}%") }
 end
