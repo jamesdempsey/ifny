@@ -7,8 +7,8 @@ namespace :db do
       nitehawk_now_showing_url = Theater.nitehawk_url
       nitehawk_coming_soon_url = Theater.nitehawk_url('coming-soon/')
 
-      scrape_nitehawk_now_showing(nitehawk_now_showing_url)
-      scrape_nitehawk_coming_soon(nitehawk_coming_soon_url)
+      scrape_nitehawk(nitehawk_now_showing_url)
+      scrape_nitehawk(nitehawk_coming_soon_url)
     end
   end
 end
