@@ -6,7 +6,7 @@
 #hidden
   - @films.each do |film|
     - poster = film.images.posters.first
-    .item{style: container_dimensions(poster), id: film.id}
+    .item{style: container_dimensions(poster), class: theater_classes(film), id: film.id}
       .item-content{style: container_dimensions(poster)}
         .item-image
           = image_tag poster.poster.resized

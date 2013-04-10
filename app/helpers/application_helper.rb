@@ -4,4 +4,8 @@ module ApplicationHelper
     height = image.height / 2
     ['width: ', width, 'px; height: ', height, 'px'].join
   end
+
+  def theater_classes(film)
+    film.theaters.map { |theater| Theater::URLS.key(theater.url) }.join(' ')
+  end
 end
