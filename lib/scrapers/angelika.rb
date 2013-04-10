@@ -49,7 +49,7 @@ module Scrapers
 
       film_doc = Nokogiri::HTML(open(film_url))
 
-      film_title = film_doc.css('.movieBlockHeader').first.content.titleize
+      film_title = film_doc.css('.movieBlockHeader').first.content.titleize.chomp('*')
 
       content_div = film_doc.css('#mainContent').first
       film_desc = content_div.css('span.contentText').first.content
