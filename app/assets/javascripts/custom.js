@@ -2,6 +2,7 @@ $(function() {
   var $container = $('#container'),
     $hidden = $('#hidden'),
     $item = $('.item'),
+    $sort_buttons = $('#sort-by a'),
 
     // item container shrink function
     shrink = function(item) {
@@ -55,8 +56,23 @@ $(function() {
       if (item.hasClass('expanded')) {
         scrollTo(item);
       }
+    },
+    getSortData: {
+      title: function($elem) {
+        return $elem.find('.film-title').text();
+      }
     }
   }).isotope('insert', $hidden.find('.item'));
+
+  // sorting listeners
+  $sort_buttons.click(function() {
+    var $this = $(this), sortName = $this.attr('href').slice(1),
+      sortType = sortName === 'shuffle' ? 'shuffle' : {sortBy: sortName}
+    $sort_buttons.removeClass('active');
+    $this.addClass('active');
+    $container.isotope(sortType);
+    return false;
+  });
 
   // Catch theater name link clicks on dom ready
   $('a.theater-name').click(function(e) {
