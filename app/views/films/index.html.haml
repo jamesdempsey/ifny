@@ -1,4 +1,8 @@
 %h1= 'Films'
+.btn-group#sort-by
+  %a{href: '#shuffle', class: 'btn btn-small btn-inverse'}= 'shuffle'
+  %a{href: '#title', class: 'btn btn-small btn-inverse'}= 'alphabetical'
+  %a{href: '#original-order', class: 'btn btn-small btn-inverse'}= 'original'
 #hidden
   - @films.each do |film|
     - poster = film.images.posters.first
