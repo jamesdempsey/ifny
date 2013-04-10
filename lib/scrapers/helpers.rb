@@ -54,8 +54,8 @@ module Scrapers
       film
     end
 
-    def find_or_create_showing(date, node_content, film_id, theater_id)
-      showtime = [date, node_content, 'EDT'].join(' ')
+    def find_or_create_showing(date, time, film_id, theater_id)
+      showtime = [date, time, 'EDT'].join(' ')
       film_showtime = DateTime.parse(showtime)
 
       Showing.find_or_create_by(film_id: film_id, theater_id: theater_id, showtime: film_showtime)
