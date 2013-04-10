@@ -3,6 +3,7 @@ $(function() {
     $hidden = $('#hidden'),
     $item = $('.item'),
     $sort_buttons = $('#sort-by a'),
+    $filter_buttons = $('#filter-by a'),
 
     // item container shrink function
     shrink = function(item) {
@@ -64,13 +65,22 @@ $(function() {
     }
   }).isotope('insert', $hidden.find('.item'));
 
-  // sorting listeners
+  // sorting listener
   $sort_buttons.click(function() {
     var $this = $(this), sortName = $this.attr('href').slice(1),
       sortType = sortName === 'shuffle' ? 'shuffle' : {sortBy: sortName}
     $sort_buttons.removeClass('active');
     $this.addClass('active');
     $container.isotope(sortType);
+    return false;
+  });
+
+  // filtering listener
+  $filter_buttons.click(function() {
+    var $this = $(this), filterName = $this.attr('data-filter');
+    $filter_buttons.removeClass('active');
+    $this.addClass('active');
+    $container.isotope({filter: filterName});
     return false;
   });
 
