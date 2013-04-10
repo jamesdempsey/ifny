@@ -2,7 +2,7 @@ module Scrapers
   module Angelika
     include Scrapers::Helpers
 
-    def scrape_angelika_now_showing(angelika_now_showing_url)
+    def scrape_angelika_now_showing(angelika_now_showing_url, theater: 'angelika')
       angelika_now_showing = Nokogiri::HTML(open(angelika_now_showing_url))
 
       dates = angelika_now_showing.css('.dropdownChooseDate option').map do |dropdown_option|
@@ -19,14 +19,15 @@ module Scrapers
             a_node.content =~ /MORE/
           end
 
-          film_url = Theater.angelika_url(a_nodes.first.attributes['href'].value)
+          film_url = Theater.send("#{theater}_url".to_sym,
+                                  a_nodes.first.attributes['href'].value)
 
-          scrape_angelika_doc(film_url)
+          scrape_angelika_doc(film_url, theater: theater)
         end
       end
     end
 
-    def scrape_angelika_coming_soon(angelika_coming_soon_url)
+    def scrape_angelika_coming_soon(angelika_coming_soon_url, theater: 'angelika')
       angelika_coming_soon = Nokogiri::HTML(open(angelika_coming_soon_url))
 
       angelika_coming_soon.css('#movieBlock').each do |div_node|
@@ -36,14 +37,15 @@ module Scrapers
 
         coming_soon_date = div_node.css('.movieBlockDate').first.content
 
-        film_url = Theater.angelika_url(a_nodes.first.attributes['href'].value)
+        film_url = Theater.send("#{theater}_url".to_sym,
+                                a_nodes.first.attributes['href'].value)
 
-        scrape_angelika_doc(film_url, coming_soon_date: coming_soon_date)
+        scrape_angelika_doc(film_url, coming_soon_date: coming_soon_date, theater: theater)
       end
     end
 
-    def scrape_angelika_doc(film_url, coming_soon_date: '')
-      angelika = Theater.find_by_url(Theater.angelika_url)
+    def scrape_angelika_doc(film_url, coming_soon_date: '', theater: 'angelika')
+      angelika = Theater.find_by_url(Theater.send("#{theater}_url".to_sym))
 
       film_doc = Nokogiri::HTML(open(film_url))
 
@@ -54,7 +56,7 @@ module Scrapers
 
       unless remote_poster_url = scrape_imdb_poster(film_title)
         img_src_url = film_doc.css('#movieDelivery img').first.attributes['src'].value
-        remote_poster_url = Theater.angelika_url(img_src_url)
+        remote_poster_url = Theater.send("#{theater}_url".to_sym, img_src_url)
       end
 
       film = find_or_create_film(film_title, film_desc, film_url, remote_poster_url)
