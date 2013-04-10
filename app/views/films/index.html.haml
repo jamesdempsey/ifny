@@ -3,6 +3,12 @@
   %a{href: '#shuffle', class: 'btn btn-small btn-inverse'}= 'shuffle'
   %a{href: '#title', class: 'btn btn-small btn-inverse'}= 'alphabetical'
   %a{href: '#original-order', class: 'btn btn-small btn-inverse'}= 'original'
+.btn-group#filter-by
+  %a{href: '#', 'data-filter' => '*', class: 'btn btn-small btn-inverse'}= 'all'
+  %a{href: '#', 'data-filter' => '.ifc', class: 'btn btn-small btn-inverse'}= 'ifc'
+  %a{href: '#', 'data-filter' => '.nitehawk', class: 'btn btn-small btn-inverse'}= 'nitehawk'
+  %a{href: '#', 'data-filter' => '.angelika', class: 'btn btn-small btn-inverse'}= 'angelika'
+  %a{href: '#', 'data-filter' => '.village_east', class: 'btn btn-small btn-inverse'}= 'village_east'
 #hidden
   - @films.each do |film|
     - poster = film.images.posters.first
