@@ -6,7 +6,8 @@ class Theater < ActiveRecord::Base
 
   URLS = {ifc: 'http://www.ifccenter.com/',
           angelika: 'http://www.angelikafilmcenter.com/',
-          village_east: 'http://www.villageeastcinema.com/'}
+          village_east: 'http://www.villageeastcinema.com/',
+          nitehawk: 'http://www.nitehawkcinema.com/'}
 
   URLS.each do |theater, url|
     define_singleton_method("#{theater}_url") { |*url_strings| [url, *url_strings].join }
