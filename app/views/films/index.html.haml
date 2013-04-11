@@ -1,14 +1,11 @@
 %h1= 'Films'
 .btn-group#sort-by
-  %a{href: '#shuffle', class: 'btn btn-small btn-inverse'}= 'shuffle'
-  %a{href: '#title', class: 'btn btn-small btn-inverse'}= 'alphabetical'
-  %a{href: '#original-order', class: 'btn btn-small btn-inverse'}= 'original'
+  %a{href: '#shuffle', class: 'btn btn-small btn-inverse'}= 'Shuffle'
+  %a{href: '#title', class: 'btn btn-small btn-inverse'}= 'Alphabetical'
+  %a{href: '#original-order', class: 'btn btn-small btn-inverse'}= 'Original'
 .btn-group#filter-by
-  %a{href: '#', 'data-filter' => '*', class: 'btn btn-small btn-inverse'}= 'all'
-  %a{href: '#', 'data-filter' => '.ifc', class: 'btn btn-small btn-inverse'}= 'ifc'
-  %a{href: '#', 'data-filter' => '.nitehawk', class: 'btn btn-small btn-inverse'}= 'nitehawk'
-  %a{href: '#', 'data-filter' => '.angelika', class: 'btn btn-small btn-inverse'}= 'angelika'
-  %a{href: '#', 'data-filter' => '.village_east', class: 'btn btn-small btn-inverse'}= 'village_east'
+  %a{href: '#', 'data-filter' => '*', class: 'btn btn-small btn-inverse'}= 'All'
+  = render 'filter_buttons'
 #hidden
   - @films.each do |film|
     - poster = film.images.posters.first

@@ -8,4 +8,8 @@ module ApplicationHelper
   def theater_classes(film)
     film.theaters.map { |theater| Theater::URLS.key(theater.url) }.join(' ')
   end
+
+  def theater_class(theater)
+    Theater::URLS.key(theater.url)
+  end
 end
