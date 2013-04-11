@@ -6,7 +6,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Theater.create!(name: 'IFC Center', url: Theater.ifc_url)
-Theater.create!(name: 'Angelika New York', url: Theater.angelika_url)
-Theater.create!(name: 'Village East Cinema', url: Theater.village_east_url)
-Theater.create!(name: 'Nitehawk Cinema', url: Theater.nitehawk_url)
+Theater::ALL.each do |theater, hash|
+  Theater.find_or_create_by!(name: hash[:name], url: hash[:url])
+end
