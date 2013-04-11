@@ -23,7 +23,7 @@ class Theater < ActiveRecord::Base
           }
         }
 
-  URLS.each do |theater, url|
-    define_singleton_method("#{theater}_url") { |*url_strings| [url, *url_strings].join }
+  ALL.each do |theater, hash|
+    define_singleton_method("#{theater}_url") { |*url_strings| [hash[:url], *url_strings].join }
   end
 end

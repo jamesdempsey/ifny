@@ -6,10 +6,15 @@ module ApplicationHelper
   end
 
   def theater_classes(film)
-    film.theaters.map { |theater| Theater::URLS.key(theater.url) }.join(' ')
+    classes = film.theaters.map do |theater|
+      hash = {name: theater.name, url: theater.url}
+      Theater::ALL.key(hash)
+    end
+
+    classes.join(' ')
   end
 
   def theater_class(theater)
-    Theater::URLS.key(theater.url)
+    Theater::ALL.key({name: theater.name, url: theater.url})
   end
 end
