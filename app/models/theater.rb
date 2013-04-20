@@ -9,17 +9,25 @@ class Theater < ActiveRecord::Base
             name: 'IFC Center',
             url: 'http://www.ifccenter.com/'
           },
+
           angelika: {
             name: 'Angelika New York',
             url: 'http://www.angelikafilmcenter.com/'
           },
+
           village_east: {
             name: 'Village East Cinema',
             url: 'http://www.villageeastcinema.com/'
           },
+
           nitehawk: {
             name: 'Nitehawk Cinema',
             url: 'http://www.nitehawkcinema.com/'
+          },
+
+          lincoln_center: {
+            name: 'The Film Society of Lincoln Center',
+            url: 'http://www.filmlinc.com/'
           }
         }
 
