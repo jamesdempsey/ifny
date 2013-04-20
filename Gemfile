@@ -20,12 +20,14 @@ gem 'active_model_serializers', '~> 0.7.0'
 group :development, :test do
   gem 'faker'
   gem 'rspec-rails', '~> 2.0'
+  gem 'guard-rspec'
 end
 
 group :test do
   gem 'capybara'
   gem 'vcr'
   gem 'webmock', '~> 1.9.0'
+  gem 'growl'
 end
 
 # Gems used only for assets and not required
