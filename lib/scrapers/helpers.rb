@@ -9,31 +9,24 @@ module Scrapers
                                      Regexp::IGNORECASE)
 
     def scrape_imdb_poster(film_title)
-      imdb_url = 'http://www.imdb.com'
-      imdb_search_url = [imdb_url, '/find?q=', CGI::escape(film_title), '&s=all'].join
-      imdb_search_results = Nokogiri::HTML(open(imdb_search_url))
+      search_results = nokogiri imdb_query_url(film_title)
 
-      imdb_titles = imdb_search_results.css('h3').select do |h_node|
-        h_node.content == 'Titles'
-      end
+      titles = search_results.select_by_content(:h3, 'Titles')
 
-      if imdb_titles.present?
-        imdb_table = imdb_titles.first.next_sibling.next_sibling
+      if titles.present?
+        table = titles.first.next_sibling.next_sibling
+        film_link = table.select_by_content(:a, film_title)
 
-        imdb_a_nodes = imdb_table.css('a').select do |a_node|
-          a_node.content == film_title
-        end
-
-        if imdb_a_nodes.present?
-          imdb_film_url = imdb_a_nodes.first.attributes['href'].value
-          imdb_film_doc = Nokogiri::HTML(open([imdb_url, imdb_film_url].join))
+        if film_link.present?
+          film_url = film_link.node_href
+          imdb_film_doc = nokogiri imdb_url(film_url)
           imdb_primary_img = imdb_film_doc.css('#img_primary')
 
           if imdb_primary_img.css('a').present?
-            imdb_primary_img_url = imdb_primary_img.css('a').first.attributes['href'].value
+            img_url = imdb_primary_img.css('a').node_href
 
-            imdb_poster_doc = Nokogiri::HTML(open([imdb_url, imdb_primary_img_url].join))
-            imdb_poster_doc.css('#primary-img').first.attributes['src'].value
+            imdb_poster_doc = nokogiri imdb_url(img_url)
+            imdb_poster_doc.css('#primary-img').node_src
           end
         end
       end
@@ -60,5 +53,33 @@ module Scrapers
 
       Showing.find_or_create_by(film_id: film_id, theater_id: theater_id, showtime: film_showtime)
     end
+
+    protected
+
+      def select_by_content(tag, content)
+        self.css(tag.to_s).select { |node| node.content == content }
+      end
+
+      def node_href
+        self.first.attributes['href'].value
+      end
+
+      def node_src
+        self.first.attributes['src'].value
+      end
+
+    private
+
+      def nokogiri(url)
+        Nokogiri::HTML open(url)
+      end
+
+      def imdb_url(url)
+        'http://www.imdb.com' + url
+      end
+
+      def imdb_query_url(film_title)
+        imdb_url '/find?q=' + CGI::escape(film_title) + '&s=all'
+      end
   end
 end
