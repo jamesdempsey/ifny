@@ -2,11 +2,13 @@ module Scrapers
   module Helpers
     days = "((#{%w(Monday Tuesday Wednesday Thursday Friday
               Saturday Sunday).join('|')})"
+
     months = "(#{%w(January February March April May June July August
                 September October November December).join('|')})"
+
     IFC_DATE_REGEXP = Regexp.new("#{days}, #{months} " + '\d{1,2})')
-    ANGELIKA_DATE_REGEXP = Regexp.new("(#{months} " + '\d{1,2}, \d{4})',
-                                     Regexp::IGNORECASE)
+
+    ANGELIKA_DATE_REGEXP = Regexp.new("(#{months} " + '\d{1,2}, \d{4})', Regexp::IGNORECASE)
 
     def scrape_imdb_poster(film_title)
       search_results = nokogiri imdb_query_url(film_title)
